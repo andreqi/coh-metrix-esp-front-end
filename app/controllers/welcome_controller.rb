@@ -6,6 +6,7 @@ class HttpRequestClient
     req = Net::HTTP::Post.new(url.path)
     req.set_form_data params
     res = Net::HTTP.start(url.host, url.port) {|http|
+      http.read_timeout = 500
       http.request(req)
     }
     res.body
