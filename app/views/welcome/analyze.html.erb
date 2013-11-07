@@ -1,0 +1,39 @@
+<h2>Coh-Metrix-Esp</h2>
+<p>Ingrese el texto a analizar:</p>
+
+<%= form_tag({}, {:class => 'form'}) do %>
+	<textarea rows=10 id='texto' name='texto' style="width:95%; margin-bottom:10px"> </textarea>
+	<button type="submit" class="btn">Analizar Texto</button>
+<% end %>
+
+<div class="texto">
+<textarea disabled rows=10 id='texto' name='texto' style="width:95%; margin-bottom:10px"> 
+	<%=@text %>
+</textarea>
+</div>
+<div class='clasificacion'>
+<p>
+	Su texto fue clasificado como: <code> <%=@class%> </code>
+</p>
+</div>
+
+<div class='metricas'>
+<table class="table table-hover">
+	<thead> <th> Tipo </th> <th> Código </th> <th> Valor </th></thead>
+	<tbody> 
+		<% @metrics.each do |tipo, indices|%>
+			<tr> <td rowspan=<%= indices.length %>> <%=tipo%> </td> 
+			<% first = true %>
+			<% indices.each do |code, value|%>
+				<% if first
+						first = false	
+					else %>
+					<tr>
+				<% end %>
+				<td> <%= code %> </td> <td> <%= sprintf('%.2f', value) %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+</div>
